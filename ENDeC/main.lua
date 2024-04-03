@@ -16,13 +16,9 @@ love.window.setMode(w, h, {resizable = true, vsync = 1, borderless = false, cent
 love.window.maximize()
 wWidth, wHeight = love.graphics.getDimensions()
 
-
--- require needed first
 canvas = require("Engine.canvas")
 json = require("Engine.json")
 
-
--- scene
 menu = require("menu") --barre de menu
 editor = require("editor") --cadre d'édition de la carte
 tools = require("tools") --zone outils
@@ -42,27 +38,22 @@ function love.update(dt)
 end
 
 function love.draw()
-
   love.graphics.setBackgroundColor(0.7, 0.7, 0.7, 1)
   love.graphics.setColor(0.7, 0, 1, 1)
   love.graphics.rectangle("fill", 3, 53, (wWidth / 2) - 6, wHeight - 56)
-  love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle("line", 3, 53, (wWidth / 2) - 6, wHeight - 56)
-  love.graphics.print("Editeur", 10, 10)
-  love.graphics.setColor(1,1,1,1)
-
-
+  love.graphics.setColor(1, 1, 1, 1)
 
   menu.draw()
   editor.draw()
   tools.draw()
-
 end
 
 function love.keypressed(key)
+  editor.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
+  editor.mousepressed(mx, my, button, istouch)
 end
 
 function love.wheelmoved(wx, wy)
