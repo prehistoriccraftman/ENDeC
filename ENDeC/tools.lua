@@ -4,10 +4,7 @@ local name = "tools"
 tools.canvas = canvas.create(name, wWidth / 2, 54, 0, 1, 1, wWidth / 2, wHeight - 50, 1, 1, 1, 1, "alpha")
 
 function tools.canvas.update(self, dt) -- override appelé dans --> updateDraw()
-  love.graphics.setColor(0.5, 0.5, 0.5, 1)
-  love.graphics.rectangle("fill", 0, 0, tools.canvas.w, tools.canvas.h)
   love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle("line", 0, 0, tools.canvas.w, tools.canvas.h)
   love.graphics.print(tools.canvas.name, 10, 10)
 end
 

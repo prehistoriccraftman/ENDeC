@@ -120,18 +120,18 @@ function donjon.changeCase(ligne, colonne, type)
   map[ligne][colonne] = type
 end
 
-function donjon.clickBlock(mx, my)
+--[[ function donjon.clickBlock(mx, my)
   if mx - donjon.viewX >= c1g and mx - donjon.viewX <= c1d and my - donjon.viewY >= l1h and my - donjon.viewY <= l1b then
     return true
   end
   return false
-end
+end ]]
 
-function changeCDV(vcolonne, vligne, mapligne, mapcolonne)
+--[[ function changeCDV(vcolonne, vligne, mapligne, mapcolonne)
   if mapcolonne > 0 and mapligne > 0 and mapcolonne <= donjon.largeur and mapligne <= donjon.hauteur then
     cdv[vligne][vcolonne] = map[mapligne][mapcolonne]
   end
-end
+end ]]
 
 --[[ function donjon.calculCDV()
     cdv = {}
@@ -261,7 +261,6 @@ function donjon.draw2D(px, py)
   if not px then px = 0 end
   if not py then py = 0 end
   --
-  love.graphics.print("Donjon affiché en 2D", 1+px, 30+py)
   for ligne = 1, donjon.hauteur do
     for colonne = 1, donjon.largeur do
       local case = map[ligne][colonne]
