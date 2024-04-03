@@ -6,8 +6,6 @@ local editScale = 1
 editor.canvas = canvas.create(name, 3, 53, 0, 1, 1, (wWidth / 2) - 7, wHeight - 57, 1, 1, 1, 1, "alpha")
 
 function editor.canvas.update(self, dt)
-  -- wZoom:update()
-
   --Draw inside
   love.graphics.scale(editScale, editScale)
   donjon.draw(dt, "2D", 0, 0)
@@ -16,7 +14,7 @@ end
 
 function editor.load(lv)
   if lv ~= 0 then
-    donjon.load(1)
+    donjon.load(2, 30,30)
   end
 end
 
