@@ -37,7 +37,7 @@ end
 function editor.wheelmoved(wx, wy)
   local mx = love.mouse.getX()
   local my = love.mouse.getY()
-  if mx>donjon.
+  -- if mx>donjon.
   if wy > 0 then
     editScale = editScale * 1.1
     if editScale > 5 then
