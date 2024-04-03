@@ -1,8 +1,8 @@
 local donjon = {}
 
 --marge d'affichage
-donjon.viewX = 10
-donjon.viewY = 10
+donjon.viewX = 0
+donjon.viewY = 0
 --taille fenêtre d'affichage
 donjon.viewWidth = 200
 donjon.viewHeight = 200
@@ -41,7 +41,6 @@ donjon.SUD = 3
 donjon.OUEST = 4
 
 local cdv = {}
-
 local map = {}
 local maps = {}
 
@@ -86,31 +85,6 @@ maps[1] = {
   {13, 24, 1}, --départ depuis étage sup. (#map - 1)
   {2, 20, 2} --départ depuis étage inf. (#map)
 }
--- maps[2] = {
-
--- }
--- maps[3] = {
-
--- }
--- maps[4] = {
-
--- }
--- maps[5] = {
-
--- }
-
--- local imgNord = love.graphics.newImage("images/nord.png")
--- local imgEst = love.graphics.newImage("images/est.png")
--- local imgSud = love.graphics.newImage("images/sud.png")
--- local imgOuest = love.graphics.newImage("images/ouest.png")
-
---[[ function donjon.placeJoueur(joueur, lv)
-    if joueur.prevLvl < lv then
-        joueur.coord = map[#map - 1]
-    else
-        joueur.coord = map[#map]
-    end
-end ]]
 
 function donjon.case(colonne, ligne)
   return map[ligne][colonne]
@@ -120,135 +94,10 @@ function donjon.changeCase(ligne, colonne, type)
   map[ligne][colonne] = type
 end
 
---[[ function donjon.clickBlock(mx, my)
-  if mx - donjon.viewX >= c1g and mx - donjon.viewX <= c1d and my - donjon.viewY >= l1h and my - donjon.viewY <= l1b then
-    return true
+function donjon.load(lv, dw, dh)
+  if not maps[lv] then
+    newMap(lv, dw, dh)
   end
-  return false
-end ]]
-
---[[ function changeCDV(vcolonne, vligne, mapligne, mapcolonne)
-  if mapcolonne > 0 and mapligne > 0 and mapcolonne <= donjon.largeur and mapligne <= donjon.hauteur then
-    cdv[vligne][vcolonne] = map[mapligne][mapcolonne]
-  end
-end ]]
-
---[[ function donjon.calculCDV()
-    cdv = {}
-    for ligne = 1, 4 do
-        cdv[ligne] = {0, 0, 0, 0, 0}
-    end
-
-    local x = joueur.coord[1]
-    local y = joueur.coord[2]
-
-    if joueur.coord[3] == donjon.NORD then
-        --ligne joueur
-        changeCDV(1, 1, y, x - 2) --gauche+2
-        changeCDV(2, 1, y, x - 1) --gauche+1
-        changeCDV(3, 1, y, x) --centre
-        changeCDV(4, 1, y, x + 1) --droite+1
-        changeCDV(5, 1, y, x + 2) --droite+2
-        --ligne devant
-        changeCDV(1, 2, y - 1, x - 2)
-        changeCDV(2, 2, y - 1, x - 1)
-        changeCDV(3, 2, y - 1, x)
-        changeCDV(4, 2, y - 1, x + 1)
-        changeCDV(5, 2, y - 1, x + 2)
-        --ligne +2
-        changeCDV(1, 3, y - 2, x - 2)
-        changeCDV(2, 3, y - 2, x - 1)
-        changeCDV(3, 3, y - 2, x)
-        changeCDV(4, 3, y - 2, x + 1)
-        changeCDV(5, 3, y - 2, x + 2)
-        --ligne +3 dernière visible
-        changeCDV(1, 4, y - 3, x - 2)
-        changeCDV(2, 4, y - 3, x - 1)
-        changeCDV(3, 4, y - 3, x)
-        changeCDV(4, 4, y - 3, x + 1)
-        changeCDV(5, 4, y - 3, x + 2)
-    end
-    if joueur.coord[3] == donjon.EST then
-        --ligne joueur
-        changeCDV(1, 1, y - 2, x)
-        changeCDV(2, 1, y - 1, x)
-        changeCDV(3, 1, y, x)
-        changeCDV(4, 1, y + 1, x)
-        changeCDV(5, 1, y + 2, x)
-        --ligne devant
-        changeCDV(1, 2, y - 2, x + 1)
-        changeCDV(2, 2, y - 1, x + 1)
-        changeCDV(3, 2, y, x + 1)
-        changeCDV(4, 2, y + 1, x + 1)
-        changeCDV(5, 2, y + 2, x + 1)
-        --ligne +2
-        changeCDV(1, 3, y - 2, x + 2)
-        changeCDV(2, 3, y - 1, x + 2)
-        changeCDV(3, 3, y, x + 2)
-        changeCDV(4, 3, y + 1, x + 2)
-        changeCDV(5, 3, y + 2, x + 2)
-        --ligne +3 dernière visible
-        changeCDV(1, 4, y - 2, x + 3)
-        changeCDV(2, 4, y - 1, x + 3)
-        changeCDV(3, 4, y, x + 3)
-        changeCDV(4, 4, y + 1, x + 3)
-        changeCDV(5, 4, y + 2, x + 3)
-    end
-    if joueur.coord[3] == donjon.SUD then
-        --ligne joueur
-        changeCDV(1, 1, y, x + 2)
-        changeCDV(2, 1, y, x + 1)
-        changeCDV(3, 1, y, x)
-        changeCDV(4, 1, y, x - 1)
-        changeCDV(5, 1, y, x - 2)
-        --ligne devant
-        changeCDV(1, 2, y + 1, x + 2)
-        changeCDV(2, 2, y + 1, x + 1)
-        changeCDV(3, 2, y + 1, x)
-        changeCDV(4, 2, y + 1, x - 1)
-        changeCDV(5, 2, y + 1, x - 2)
-        --ligne +2
-        changeCDV(1, 3, y + 2, x + 2)
-        changeCDV(2, 3, y + 2, x + 1)
-        changeCDV(3, 3, y + 2, x)
-        changeCDV(4, 3, y + 2, x - 1)
-        changeCDV(5, 3, y + 2, x - 2)
-        --ligne +3 dernière visible
-        changeCDV(1, 4, y + 3, x + 2)
-        changeCDV(2, 4, y + 3, x + 1)
-        changeCDV(3, 4, y + 3, x)
-        changeCDV(4, 4, y + 3, x - 1)
-        changeCDV(5, 4, y + 3, x - 2)
-    end
-    if joueur.coord[3] == donjon.OUEST then
-        --ligne joueur
-        changeCDV(1, 1, y + 2, x)
-        changeCDV(2, 1, y + 1, x)
-        changeCDV(3, 1, y, x)
-        changeCDV(4, 1, y - 1, x)
-        changeCDV(5, 1, y - 2, x)
-        --ligne devant
-        changeCDV(1, 2, y + 2, x - 1)
-        changeCDV(2, 2, y + 1, x - 1)
-        changeCDV(3, 2, y, x - 1)
-        changeCDV(4, 2, y - 1, x - 1)
-        changeCDV(5, 2, y - 2, x - 1)
-        --ligne +2
-        changeCDV(1, 3, y + 2, x - 2)
-        changeCDV(2, 3, y + 1, x - 2)
-        changeCDV(3, 3, y, x - 2)
-        changeCDV(4, 3, y - 1, x - 2)
-        changeCDV(5, 3, y - 2, x - 2)
-        --ligne +3 dernière visible
-        changeCDV(1, 4, y + 2, x - 3)
-        changeCDV(2, 4, y + 1, x - 3)
-        changeCDV(3, 4, y, x - 3)
-        changeCDV(4, 4, y - 1, x - 3)
-        changeCDV(5, 4, y - 2, x - 3)
-    end
-end ]]
-
-function donjon.load(lv)
   map = maps[lv]
   donjon.largeur = #map[1]
   donjon.hauteur = #map - 2
@@ -258,8 +107,13 @@ function donjon.load(lv)
 end
 
 function donjon.draw2D(px, py)
-  if not px then px = 0 end
-  if not py then py = 0 end
+  if px then
+    donjon.viewX = px
+  end
+  if py then
+    donjon.viewY = py
+  end
+
   --
   for ligne = 1, donjon.hauteur do
     for colonne = 1, donjon.largeur do
@@ -283,24 +137,11 @@ function donjon.draw2D(px, py)
       elseif case >= 70 and case <= 79 then
         love.graphics.setColor(1, 1, 0)
       end
-      love.graphics.rectangle("fill", x+px, y+py, donjon.tailleCase, donjon.tailleCase)
+      love.graphics.rectangle("fill", x + px, y + py, donjon.tailleCase, donjon.tailleCase)
       love.graphics.setColor(0, 0, 0)
       love.graphics.setLineWidth(.2)
-      love.graphics.rectangle("line", x+px, y+py, donjon.tailleCase, donjon.tailleCase)
+      love.graphics.rectangle("line", x + px, y + py, donjon.tailleCase, donjon.tailleCase)
       love.graphics.setLineWidth(1)
-
---[[             if colonne == joueur.coord[1] and ligne == joueur.coord[2] then
-                love.graphics.setColor(1, 1, 1)
-                if joueur.coord[3] == donjon.NORD then
-                    love.graphics.draw(imgNord, x, y)
-                elseif joueur.coord[3] == donjon.EST then
-                    love.graphics.draw(imgEst, x, y)
-                elseif joueur.coord[3] == donjon.SUD then
-                    love.graphics.draw(imgSud, x, y)
-                elseif joueur.coord[3] == donjon.OUEST then
-                    love.graphics.draw(imgOuest, x, y)
-                end
-            end ]]
     end
   end
 end
@@ -395,7 +236,10 @@ function drawTraps(ligne, colonne, case)
 
     love.graphics.setColor(0, 0, 0)
     love.graphics.ellipse("fill", x, y, radiusx, radiusy)
-    print ("trap drawn at "..x.."-"..y.." on case "..colonne.."-"..ligne.." radx="..radiusx..", rady="..radiusy)
+    print(
+      "trap drawn at " ..
+        x .. "-" .. y .. " on case " .. colonne .. "-" .. ligne .. " radx=" .. radiusx .. ", rady=" .. radiusy
+    )
   end
 end
 
@@ -419,28 +263,20 @@ end
 function donjon.draw3D()
   --dessin du sol
   drawCeilFloor({0, l3b, b3g, l3b, 0, l13b}, 3, 1, cdv[3][1])
-  drawTraps(3, 1, cdv[3][1])
   drawShadow(3, 1, {0, l3b, b3g, l3b, 0, l13b})
   drawCeilFloor({b3g, l3b, c3g, l3b, c2g, l2b, 0, l2b, 0, l13b}, 3, 2, cdv[3][2])
-  drawTraps(3, 2, cdv[3][2])
   drawShadow(3, 2, {b3g, l3b, c3g, l3b, c2g, l2b, 0, l2b, 0, l13b})
   drawCeilFloor({c3g, l3b, c3d, l3b, c2d, l2b, c2g, l2b}, 3, 3, cdv[3][3])
-  drawTraps(3, 3, cdv[3][3])
   drawShadow(3, 3, {c3g, l3b, c3d, l3b, c2d, l2b, c2g, l2b})
   drawCeilFloor({c3d, l3b, b3d, l3b, donjon.viewWidth, l13b, donjon.viewWidth, l2b, c2d, l2b}, 3, 4, cdv[3][4])
-  drawTraps(3, 4, cdv[3][4])
   drawShadow(3, 4, {c3d, l3b, b3d, l3b, donjon.viewWidth, l13b, donjon.viewWidth, l2b, c2d, l2b})
   drawCeilFloor({b3d, l3b, donjon.viewWidth, l3b, donjon.viewWidth, l13b}, 3, 5, cdv[3][5])
-  drawTraps(3, 5, cdv[3][5])
   drawShadow(3, 5, {b3d, l3b, donjon.viewWidth, l3b, donjon.viewWidth, l13b})
   drawCeilFloor({0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b}, 2, 2, cdv[2][2])
-  drawTraps(2, 2, cdv[2][2])
   drawShadow(2, 2, {0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b})
   drawCeilFloor({0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b}, 2, 3, cdv[2][3])
-  drawTraps(2, 3, cdv[2][3])
   drawShadow(2, 3, {0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b})
   drawCeilFloor({0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b}, 2, 4, cdv[2][4])
-  drawTraps(2, 4, cdv[2][4])
   drawShadow(2, 4, {0, l2b, donjon.viewWidth, l2b, donjon.viewWidth, l1b, 0, l1b})
   drawCeilFloor(
     {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight},
@@ -448,7 +284,6 @@ function donjon.draw3D()
     2,
     cdv[1][2]
   )
-  drawTraps(1, 2, cdv[1][2])
   drawShadow(1, 2, {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight})
   drawCeilFloor(
     {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight},
@@ -456,7 +291,6 @@ function donjon.draw3D()
     3,
     cdv[1][3]
   )
-  drawTraps(1, 3, cdv[1][3])
   drawShadow(1, 3, {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight})
   drawCeilFloor(
     {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight},
@@ -464,7 +298,6 @@ function donjon.draw3D()
     4,
     cdv[1][4]
   )
-  drawTraps(1, 4, cdv[1][4])
   drawShadow(1, 4, {0, l1b, donjon.viewWidth, l1b, donjon.viewWidth, donjon.viewHeight, 0, donjon.viewHeight})
 
   --dessin du plafond
@@ -503,9 +336,9 @@ function donjon.draw3D()
   drawTexture({c1d, l1h, donjon.viewWidth, 0, donjon.viewWidth, donjon.viewHeight, c1d, l1b}, 1, 4, cdv[1][4]) --droite
 end
 
-function donjon.draw(dt, mode, px, py)
+function donjon.draw(dt, mode, px, py, pw, ph)
   if mode == "2D" then
-    donjon.draw2D(px, py)
+    donjon.draw2D(px, py, pw, ph)
   elseif mode == "3D" then
     donjon.draw3D()
   end
@@ -518,6 +351,18 @@ function donjon.blocked(case)
     end
   end
   return false
+end
+
+function newMap(lv, dw, dh)
+  local newmap = {}
+  for l = 1, dh do
+    newmap[l] = {}
+    for c = 1, dw do
+      local casetype = math.random(90, 93)
+      newmap[l][c] = casetype
+    end
+  end
+  maps[lv] = newmap
 end
 
 return donjon
