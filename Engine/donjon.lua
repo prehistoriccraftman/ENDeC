@@ -395,7 +395,6 @@ function drawTraps(ligne, colonne, case)
 
     love.graphics.setColor(0, 0, 0)
     love.graphics.ellipse("fill", x, y, radiusx, radiusy)
-    print ("trap drawn at "..x.."-"..y.." on case "..colonne.."-"..ligne.." radx="..radiusx..", rady="..radiusy)
   end
 end
 
