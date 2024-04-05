@@ -1,8 +1,8 @@
 local donjon = {}
 
 --marge d'affichage
-donjon.viewX = 10
-donjon.viewY = 10
+donjon.viewX = 0
+donjon.viewY = 0
 --taille fenêtre d'affichage
 donjon.viewWidth = 200
 donjon.viewHeight = 200
@@ -111,7 +111,6 @@ maps[1] = {
         joueur.coord = map[#map]
     end
 end ]]
-
 function donjon.case(colonne, ligne)
   return map[ligne][colonne]
 end
@@ -126,13 +125,11 @@ end
   end
   return false
 end ]]
-
 --[[ function changeCDV(vcolonne, vligne, mapligne, mapcolonne)
   if mapcolonne > 0 and mapligne > 0 and mapcolonne <= donjon.largeur and mapligne <= donjon.hauteur then
     cdv[vligne][vcolonne] = map[mapligne][mapcolonne]
   end
 end ]]
-
 --[[ function donjon.calculCDV()
     cdv = {}
     for ligne = 1, 4 do
@@ -247,8 +244,10 @@ end ]]
         changeCDV(5, 4, y - 2, x - 3)
     end
 end ]]
-
 function donjon.load(lv)
+  if not maps[lv] then
+    newMap(lv, 35, 35)
+  end
   map = maps[lv]
   donjon.largeur = #map[1]
   donjon.hauteur = #map - 2
@@ -258,8 +257,12 @@ function donjon.load(lv)
 end
 
 function donjon.draw2D(px, py)
-  if not px then px = 0 end
-  if not py then py = 0 end
+  if not px then
+    px = 0
+  end
+  if not py then
+    py = 0
+  end
   --
   for ligne = 1, donjon.hauteur do
     for colonne = 1, donjon.largeur do
@@ -283,13 +286,13 @@ function donjon.draw2D(px, py)
       elseif case >= 70 and case <= 79 then
         love.graphics.setColor(1, 1, 0)
       end
-      love.graphics.rectangle("fill", x+px, y+py, donjon.tailleCase, donjon.tailleCase)
+      love.graphics.rectangle("fill", x + px, y + py, donjon.tailleCase, donjon.tailleCase)
       love.graphics.setColor(0, 0, 0)
       love.graphics.setLineWidth(.2)
-      love.graphics.rectangle("line", x+px, y+py, donjon.tailleCase, donjon.tailleCase)
+      love.graphics.rectangle("line", x + px, y + py, donjon.tailleCase, donjon.tailleCase)
       love.graphics.setLineWidth(1)
 
---[[             if colonne == joueur.coord[1] and ligne == joueur.coord[2] then
+      --[[             if colonne == joueur.coord[1] and ligne == joueur.coord[2] then
                 love.graphics.setColor(1, 1, 1)
                 if joueur.coord[3] == donjon.NORD then
                     love.graphics.draw(imgNord, x, y)
@@ -517,6 +520,18 @@ function donjon.blocked(case)
     end
   end
   return false
+end
+
+function newMap(lv, dw, dh)
+  local newmap = {}
+  for l = 1, dh do
+    newmap[l] = {}
+    for c = 1, dw do
+      local casetype = math.random(90, 93)
+      newmap[l][c] = casetype
+    end
+  end
+  maps[lv] = newmap
 end
 
 return donjon

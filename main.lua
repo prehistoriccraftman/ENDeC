@@ -15,6 +15,8 @@ local w, h = love.window.getDesktopDimensions(1)
 love.window.setMode(w, h, {resizable = true, vsync = 1, borderless = false, centered = true})
 love.window.maximize()
 wWidth, wHeight = love.graphics.getDimensions()
+focusOn = "none"
+mx, my = 0, 0
 
 canvas = require("Engine.canvas")
 json = require("Engine.json")
@@ -31,6 +33,8 @@ end
 
 function love.update(dt)
   wWidth, wHeight = love.graphics.getDimensions()
+  mx = love.mouse.getX()
+  my = love.mouse.getY()
   --
   menu.update(dt)
   tools.update(dt)
@@ -55,7 +59,7 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
-  editor.mousepressed(mx, my, button, istouch)
+  editor.mousepressed(button, istouch)
 end
 
 function love.wheelmoved(wx, wy)
