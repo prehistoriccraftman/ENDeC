@@ -20,6 +20,41 @@ function tools.draw(dt)
 end
 
 function tools.keypressed(key)
+  if thismaplv ~= 0 then
+    if key == "left" then
+      thismaplv = thismaplv - 1
+      if thismaplv < 1 then
+        thismaplv = 1
+      end
+    elseif key == "right" then
+      thismaplv = thismaplv + 1
+      if thismaplv > #maps then
+        thismaplv = #maps
+      end
+    elseif key == "up" then
+      thismaplv = #maps
+    elseif key == "down" then
+      thismaplv = 1
+    end
+    editor.load()
+  end
+  if key == "kp+" then
+    thismaplv = #maps + 1
+    editor.load()
+  end
+  if key == "kp-" then
+    if #maps > 0 then
+      table.remove(maps, thismaplv)
+      thismaplv = thismaplv - 1
+      if thismaplv < 1 and #maps > 0 then
+        thismaplv = 1
+      elseif #maps == 0 then
+        thismaplv = 0
+        maps = {}
+      end
+    editor.load()
+    end
+  end
 end
 
 function tools.mousepressed(button, istouch)

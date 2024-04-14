@@ -370,11 +370,13 @@ function json.decode(str)
 end
 
 function json.readFile(filename)
-    local content, var = love.filesystem.read(filename)
-    if content ~= nil then
-        content = json.decode(content)
-    end
-    return content, var
+    local content
+
+    thisfile = io.open(filename, "r")
+    content = thisfile:read("*all")
+    thisfile:close()
+
+    return content
 end
 
 function json.writeFile(str, filename)

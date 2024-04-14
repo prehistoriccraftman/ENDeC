@@ -31,6 +31,10 @@ function menu.keypressed(key)
     else
       print(errormessage)
     end
+  elseif key=="f8" then
+    maps = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
+    thismaplv = 1
+    editor.load()
   end
 end
 

@@ -14,9 +14,9 @@ function editor.canvas.update(self, dt)
   love.graphics.scale(1, 1)
 end
 
-function editor.load(lv)
-  if lv ~= 0 then
-    donjon.load(2)
+function editor.load()
+  if thismaplv ~= 0 then
+    donjon.load(thismaplv)
   end
 end
 
