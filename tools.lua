@@ -9,7 +9,6 @@ function tools.canvas.update(self, dt) -- override appelé dans --> updateDraw()
 end
 
 function tools.load()
-
 end
 
 function tools.update(dt)
@@ -23,10 +22,21 @@ end
 function tools.keypressed(key)
 end
 
-function tools.mousepressed(mx, my, button, istouch)
+function tools.mousepressed(button, istouch)
+  if inbound() then
+    focus = "tools"
+    print(focus)
+  end
 end
 
 function tools.wheelmoved(wx, wy)
+end
+
+function inbound()
+  if mx > tools.canvas.x and my > tools.canvas.y and mx < tools.canvas.w and my < tools.canvas.h then
+    return true
+  end
+  return false
 end
 
 return tools

@@ -378,7 +378,15 @@ function json.readFile(filename)
 end
 
 function json.writeFile(str, filename)
-    local success, errormessage = love.filesystem.write(filename, json.encode(str))
+    local success
+    local errormessage
+    if love.filesystem.getInfo(filename) == nul then
+        thisfile = io.open(filename, "w")
+        success, errormessage = thisfile:write(str)
+        thisfile:close()
+    else
+        success, errormessage = love.filesystem.write(filename, str)
+    end
     return succes, errormessage
 end
 

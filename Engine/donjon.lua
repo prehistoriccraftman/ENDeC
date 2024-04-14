@@ -43,7 +43,7 @@ donjon.OUEST = 4
 local cdv = {}
 
 local map = {}
-local maps = {}
+-- local maps = {}
 
 local blockTable = {} --recense les cases non traversables
 for i = 1, 10 do
