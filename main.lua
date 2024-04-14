@@ -15,6 +15,10 @@ local w, h = love.window.getDesktopDimensions(1)
 love.window.setMode(w, h, {resizable = true, vsync = 1, borderless = false, centered = true})
 love.window.maximize()
 wWidth, wHeight = love.graphics.getDimensions()
+focusOn = "none"
+mx, my = 0, 0
+maps = {}
+-- map = {}
 
 canvas = require("Engine.canvas")
 json = require("Engine.json")
@@ -22,6 +26,7 @@ json = require("Engine.json")
 menu = require("menu") --barre de menu
 tools = require("tools") --zone outils
 editor = require("editor") --cadre d'édition de la carte
+love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 
 function love.load()
   menu.load()
@@ -31,7 +36,9 @@ end
 
 function love.update(dt)
   wWidth, wHeight = love.graphics.getDimensions()
-  --
+  mx = love.mouse.getX()
+  my = love.mouse.getY()
+
   menu.update(dt)
   tools.update(dt)
   editor.update(dt)
@@ -52,12 +59,18 @@ end
 
 function love.keypressed(key)
   editor.keypressed(key)
+  menu.keypressed(key)
+  tools.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
-  editor.mousepressed(mx, my, button, istouch)
+  editor.mousepressed(button, istouch)
+  menu.mousepressed(button, istouch)
+  tools.mousepressed(button, istouch)
 end
 
 function love.wheelmoved(wx, wy)
   editor.wheelmoved(wx, wy)
+  menu.wheelmoved(wx, wy)
+  tools.wheelmoved(wx, wy)
 end

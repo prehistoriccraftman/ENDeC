@@ -4,7 +4,6 @@ local name = "menu"
 -- ICI
 menu.canvas = canvas.create(name, 0, 0, 0, 1, 1, wWidth, 50, 1, 1, 1, 1, "alpha")
 
-
 -- et LA :
 function menu.canvas.update(self, dt) -- override appelé dans --> updateDraw()
   love.graphics.setColor(0.6, 0.6, 0.6, 1)
@@ -25,12 +24,31 @@ function menu.draw(dt)
 end
 
 function menu.keypressed(key)
+  if key == "f5" then
+    local success, errormessage = json.writeFile(json.encode(maps), "E:/GitHub/ENDeC/UserSaves/Save-Test.dmf")
+    if success then
+      print("file saved")
+    else
+      print(errormessage)
+    end
+  end
 end
 
-function menu.mousepressed(mx, my, button, istouch)
+function menu.mousepressed(button, istouch)
+  if inbound() then
+    focus = "menu"
+    print(focus)
+  end
 end
 
 function menu.wheelmoved(wx, wy)
+end
+
+function inbound()
+  if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
+    return true
+  end
+  return false
 end
 
 return menu
