@@ -380,13 +380,11 @@ end
 function json.writeFile(str, filename)
     local success
     local errormessage
-    if love.filesystem.getInfo(filename) == nul then
-        thisfile = io.open(filename, "w")
-        success, errormessage = thisfile:write(str)
-        thisfile:close()
-    else
-        success, errormessage = love.filesystem.write(filename, str)
-    end
+
+    thisfile = io.open(filename, "w")
+    success, errormessage = thisfile:write(str)
+    thisfile:close()
+
     return succes, errormessage
 end
 
