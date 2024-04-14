@@ -18,7 +18,7 @@ wWidth, wHeight = love.graphics.getDimensions()
 focusOn = "none"
 mx, my = 0, 0
 maps = {}
--- map = {}
+thismaplv = 0
 
 canvas = require("Engine.canvas")
 json = require("Engine.json")
