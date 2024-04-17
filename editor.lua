@@ -1,5 +1,4 @@
 local editor = {}
-local donjon = require("Engine.donjon")
 local name = "editor"
 local editScale = 1
 
@@ -10,13 +9,13 @@ function editor.canvas.update(self, dt)
 
   --Draw inside
   love.graphics.scale(editScale, editScale)
-  donjon.draw(dt, "2D", 5, 5)
+  dgDrawing.draw(dt, "2D", 5, 5)
   love.graphics.scale(1, 1)
 end
 
 function editor.load()
   if thismaplv ~= 0 then
-    donjon.load(thismaplv)
+    dungeon.loadlevel(thismaplv)
   end
 end
 

@@ -17,15 +17,20 @@ love.window.maximize()
 wWidth, wHeight = love.graphics.getDimensions()
 focusOn = "none"
 mx, my = 0, 0
-maps = {}
+dungeonMaps = {}
 thismaplv = 0
+undo = {}
+trashcan = {}
 
 canvas = require("Engine.canvas")
 json = require("Engine.json")
+dgDrawing = require("Engine.dgDrawing")
+dungeon = require("Engine.dungeon")
 
 menu = require("menu") --barre de menu
 tools = require("tools") --zone outils
 editor = require("editor") --cadre d'édition de la carte
+
 love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 
 function love.load()

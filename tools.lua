@@ -28,31 +28,32 @@ function tools.keypressed(key)
       end
     elseif key == "right" then
       thismaplv = thismaplv + 1
-      if thismaplv > #maps then
-        thismaplv = #maps
+      if thismaplv > #dungeonMaps[2] then
+        thismaplv = #dungeonMaps[2]
       end
     elseif key == "up" then
-      thismaplv = #maps
+      thismaplv = #dungeonMaps[2]
     elseif key == "down" then
       thismaplv = 1
     end
     editor.load()
   end
   if key == "kp+" then
-    thismaplv = #maps + 1
+    thismaplv = #dungeonMaps[2] + 1
     editor.load()
   end
   if key == "kp-" then
-    if #maps > 0 then
-      table.remove(maps, thismaplv)
+    if #dungeonMaps[2] > 0 then
+      table.insert(editor.trash, dungeonMaps[2][thismaplv])
+      table.remove(dungeonMaps[2], thismaplv)
       thismaplv = thismaplv - 1
-      if thismaplv < 1 and #maps > 0 then
+      if thismaplv < 1 and #dungeonMaps[2] > 0 then
         thismaplv = 1
-      elseif #maps == 0 then
+      elseif #dungeonMaps[2] == 0 then
         thismaplv = 0
-        maps = {}
+        dungeonMaps[2] = {}
       end
-    editor.load()
+      editor.load()
     end
   end
 end

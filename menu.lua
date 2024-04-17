@@ -24,15 +24,16 @@ function menu.draw(dt)
 end
 
 function menu.keypressed(key)
-  if key == "f5" then
-    local success, errormessage = json.writeFile(json.encode(maps), "E:/GitHub/ENDeC/UserSaves/Save-Test.dmf")
+  if key == "f5" then --sauvegarde
+    local success, errormessage = json.writeFile(json.encode(dungeonMaps), "E:/GitHub/ENDeC/UserSaves/Save-Test.dmf")
     if success then
       print("file saved")
     else
       print(errormessage)
     end
-  elseif key=="f8" then
-    maps = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
+  elseif key == "f8" then --chargement
+    dungeonMaps = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
+    dungeon.load(dungeonMaps)
     thismaplv = 1
     editor.load()
   end
