@@ -35,6 +35,8 @@ editor = require("editor") --cadre d'édition de la carte
 love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 
 function love.load()
+   trashcanIndex = 0
+   thismaplv = 1
    menu.load()
    tools.load()
    editor.load()

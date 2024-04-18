@@ -15,7 +15,7 @@ end
 
 function editor.load()
    if thismaplv ~= 0 then
-      dungeon.loadlevel(thismaplv)
+      dungeon.loadLevel(thismaplv)
    end
 end
 

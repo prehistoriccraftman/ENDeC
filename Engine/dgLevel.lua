@@ -14,7 +14,7 @@ function dgLevel.load(lv)
 end
 
 function dgLevel.newLevel(name, style, intro, lv, dw, dh)
-   -- if dw == null or dh == null then
+   -- if dw == nil or dh == nil then
    --     dw, dh = 35, 35
    -- end
 

@@ -5,6 +5,15 @@ dungeon.dgLevel = require("Engine.dgLevel")
 dungeon.infos = {}
 dungeon.levels = {}
 
+dungeon.dgWidth = 0
+dungeon.dgHeight = 0
+dungeon.tailleCase = 10
+
+dungeon.NORD = 1
+dungeon.EST = 2
+dungeon.SUD = 3
+dungeon.OUEST = 4
+
 local blockTable = {} --recense les cases non traversables
 for i = 1, 10 do
    blockTable[i] = i + 9 --murs (10-11)
@@ -66,7 +75,7 @@ dungeon.levels[1] = {
 
 -- }
 
-function dungeon.case(colonne, ligne)
+function dungeon.case(lv, ligne, colonne)
    return dungeon.levels[lv][ligne][colonne]
 end
 
@@ -200,7 +209,7 @@ end ]]
     end
 end ]]
 function dungeon.load(dungeonMaps)
-   if dungeonMaps ~= null then
+   if #dungeonMaps > 0 then
       dungeon.infos = dungeonMaps[1]
       dungeon.levels = dungeonMaps[2]
    end
@@ -208,13 +217,13 @@ end
 
 function dungeon.loadLevel(lv)
    if not dungeon.levels[lv] and lv ~= 0 then
-      dungeon.levels[lv] = dgLevel.newLevel(null, null, null, lv)
+      dungeon.levels[lv] = dungeon.dgLevel.newLevel(nil, nil, nil, lv)
    end
 
-   dgLevel.load(lv)
+   dungeon.dgLevel.load(lv)
 
-   dungeon.dgWidth = #dgLevel.map[2][1]
-   dungeon.dgHeight = #dgLevel.map[2]
+   dungeon.dgWidth = #dungeon.dgLevel.map[2][1]
+   dungeon.dgHeight = #dungeon.dgLevel.map[2]
    dungeon.w = dungeon.dgWidth * dungeon.tailleCase
    dungeon.h = dungeon.dgHeight * dungeon.tailleCase
 end
