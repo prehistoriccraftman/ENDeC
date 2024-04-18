@@ -34,11 +34,11 @@ function dgDrawing.draw2D(px, py)
       py = 0
    end
    --
-   for ligne = 1, dgDrawing.dgHeight do
-      for colonne = 1, dgDrawing.dgWidth do
-         local case = dgLevel.map[ligne][colonne]
-         local x = (colonne - 1) * dgDrawing.tailleCase
-         local y = (ligne - 1) * dgDrawing.tailleCase
+   for ligne = 1, dungeon.dgHeight do
+      for colonne = 1, dungeon.dgWidth do
+         local case = dungeon.dgLevel.map[ligne][colonne]
+         local x = (colonne - 1) * dungeon.tailleCase
+         local y = (ligne - 1) * dungeon.tailleCase
 
          if case >= 90 and case <= 99 then
             love.graphics.setColor(0.2, 0.1, 0.1)
@@ -58,10 +58,10 @@ function dgDrawing.draw2D(px, py)
             love.graphics.setColor(1, 1, 0)
          end
 
-         love.graphics.rectangle("fill", x + px, y + py, dgDrawing.tailleCase, dgDrawing.tailleCase)
+         love.graphics.rectangle("fill", x + px, y + py, dungeon.tailleCase, dungeon.tailleCase)
          love.graphics.setColor(0, 0, 0)
          love.graphics.setLineWidth(.2)
-         love.graphics.rectangle("line", x + px, y + py, dgDrawing.tailleCase, dgDrawing.tailleCase)
+         love.graphics.rectangle("line", x + px, y + py, dungeon.tailleCase, dungeon.tailleCase)
          love.graphics.setLineWidth(1)
       end
    end
