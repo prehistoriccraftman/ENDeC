@@ -66,18 +66,6 @@ dungeon.levels[1] = {
 
 -- }
 
--- local imgNord = love.graphics.newImage("images/nord.png")
--- local imgEst = love.graphics.newImage("images/est.png")
--- local imgSud = love.graphics.newImage("images/sud.png")
--- local imgOuest = love.graphics.newImage("images/ouest.png")
-
---[[ function dungeon.placeJoueur(joueur, lv)
-    if joueur.prevLvl < lv then
-        joueur.coord = map[#map - 1]
-    else
-        joueur.coord = map[#map]
-    end
-end ]]
 function dungeon.case(colonne, ligne)
    return dungeon.levels[lv][ligne][colonne]
 end

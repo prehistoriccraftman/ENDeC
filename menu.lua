@@ -25,11 +25,13 @@ end
 
 function menu.keypressed(key)
    if key == "f5" then --sauvegarde
+      dungeonMaps = {dungeon.infos, dungeon.levels}
       saveFile(json.encode(dungeonMaps), "E:/GitHub/ENDeC/UserSaves/Save-Test.dmf")
-      saveFile(json.encode(undo.getTasksList()), "E:/GitHub/ENDeC/UserSaves/Save-Test.bak")
+      saveFile(json.encode({undo.currentIndex, undo.getTasksList()}), "E:/GitHub/ENDeC/UserSaves/Save-Test.bak")
    elseif key == "f8" then --chargement
       dungeonMaps = json.decode(loadFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
-      undo.tasksList = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.bak"))
+      local undoContent = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.bak"))
+      undo.currentIndex, undo.tasksList = undoContent[1], undoContent[2]
       dungeon.load(dungeonMaps)
       thismaplv = 1
       editor.load()

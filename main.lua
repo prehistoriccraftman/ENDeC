@@ -18,7 +18,7 @@ wWidth, wHeight = love.graphics.getDimensions()
 focusOn = "none"
 mx, my = 0, 0
 dungeonMaps = {}
-thismaplv = 0
+thismaplv = 1
 trashcan = {}
 trashcanIndex = 0
 

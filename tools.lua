@@ -21,34 +21,40 @@ end
 
 function tools.keypressed(key)
    if thismaplv ~= 0 then
-      if key == "left" then
+      if key == "left" then --on se positionne sur la carte précédente
          thismaplv = thismaplv - 1
-         if thismaplv < 1 then
+         if thismaplv < 1 then --contrôle si on est au début
             thismaplv = 1
          end
-      elseif key == "right" then
+      elseif key == "right" then --on se positionne sur la carte suivante
          thismaplv = thismaplv + 1
-         if thismaplv > #dungeon.levels then
+         if thismaplv > #dungeon.levels then --contrôle si on est au max
             thismaplv = #dungeon.levels
          end
-      elseif key == "up" then
+      elseif key == "pageup" then --on se positionne sur la dernière carte
          thismaplv = #dungeon.levels
-      elseif key == "down" then
+      elseif key == "pagedown" then --on se positionne sur la première carte
          thismaplv = 1
       end
-      editor.load()
+      editor.load() --on charge la carte actuelle dans l'éditeur
    end
-   if key == "kp+" then
-      thismaplv = #dungeon.levels + 1
-      undo.addTask({"add", thismaplv})
-      editor.load()
+   if key == "kp+" then --on ajoute une nouvelle carte à la liste des levels
+      thismaplv = #dungeon.levels + 1 --on positionne le curseur des niveaux sur le dernier index+1
+      undo.addTask({"add", thismaplv}) --on ajoute l'action à la liste undo
+      editor.load() --on force le chargement du nouveau niveau, qui sera créé automatiquement, puisqu'il n'existe pas encore
+   end
+   if key == "insert" then --on insert une nouvelle carte après l'index courant
+      thismaplv = thismaplv+1 --on positionne le curseur sur le futur niveau
+      table.insert(dungeon.levels, thismaplv, dungeon.dgLevel.newLevel()) --on crée le nouveau niveau, en l'insérant à l'index indiqué
+      undo.addTask({"add", thismaplv}) --on ajoute l'action à la liste undo
+      editor.load() --on force le chargement du nouveau niveau
    end
    if key == "kp-" then
       if #dungeon.levels > 0 then
-         table.insert(trashcan, #trashcan + 1, dungeon.levels[thismaplv])
-         undo.addTask({"rem", thismaplv, #trashcan})
-         table.remove(dungeon.levels, thismaplv)
-         thismaplv = thismaplv - 1
+         trashcan[thismaplv] = dungeon.levels[thismaplv]  --on jette la carte à la poubelle
+         table.remove(dungeon.levels, thismaplv) --et on l'enlève des levels
+         undo.addTask({"rem", thismaplv}) --on ajoute l'action à la liste undo
+         thismaplv = thismaplv - 1 --on se positionne sur le niveau précédent
          if thismaplv < 1 and #dungeon.levels > 0 then
             thismaplv = 1
          elseif #dungeon.levels == 0 then
