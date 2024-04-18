@@ -1,6 +1,6 @@
 -- Debugger VSCode
 if pcall(require, "lldebugger") then
-  require("lldebugger").start()
+   require("lldebugger").start()
 end
 
 -- verbosité du débuggage
@@ -19,13 +19,14 @@ focusOn = "none"
 mx, my = 0, 0
 dungeonMaps = {}
 thismaplv = 0
-undo = {}
 trashcan = {}
+trashcanIndex = 0
 
 canvas = require("Engine.canvas")
 json = require("Engine.json")
 dgDrawing = require("Engine.dgDrawing")
 dungeon = require("Engine.dungeon")
+undo = require("Engine.undo")
 
 menu = require("menu") --barre de menu
 tools = require("tools") --zone outils
@@ -34,48 +35,48 @@ editor = require("editor") --cadre d'édition de la carte
 love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 
 function love.load()
-  menu.load()
-  tools.load()
-  editor.load()
+   menu.load()
+   tools.load()
+   editor.load()
 end
 
 function love.update(dt)
-  wWidth, wHeight = love.graphics.getDimensions()
-  mx = love.mouse.getX()
-  my = love.mouse.getY()
+   wWidth, wHeight = love.graphics.getDimensions()
+   mx = love.mouse.getX()
+   my = love.mouse.getY()
 
-  menu.update(dt)
-  tools.update(dt)
-  editor.update(dt)
+   menu.update(dt)
+   tools.update(dt)
+   editor.update(dt)
 end
 
 function love.draw()
-  love.graphics.setBackgroundColor(0.7, 0.7, 0.7, 1)
-  love.graphics.setColor(0.7, 0, 1, 1)
-  love.graphics.rectangle("fill", 3, 53, (wWidth / 2) - 6, wHeight - 56)
-  love.graphics.setColor(0, 0, 0, 1)
-  love.graphics.rectangle("line", 2, 52, (wWidth / 2) - 5, wHeight - 55)
-  love.graphics.setColor(1, 1, 1, 1)
+   love.graphics.setBackgroundColor(0.7, 0.7, 0.7, 1)
+   love.graphics.setColor(0.7, 0, 1, 1)
+   love.graphics.rectangle("fill", 3, 53, (wWidth / 2) - 6, wHeight - 56)
+   love.graphics.setColor(0, 0, 0, 1)
+   love.graphics.rectangle("line", 2, 52, (wWidth / 2) - 5, wHeight - 55)
+   love.graphics.setColor(1, 1, 1, 1)
 
-  menu.draw()
-  tools.draw()
-  editor.draw()
+   menu.draw()
+   tools.draw()
+   editor.draw()
 end
 
 function love.keypressed(key)
-  editor.keypressed(key)
-  menu.keypressed(key)
-  tools.keypressed(key)
+   editor.keypressed(key)
+   menu.keypressed(key)
+   tools.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
-  editor.mousepressed(button, istouch)
-  menu.mousepressed(button, istouch)
-  tools.mousepressed(button, istouch)
+   editor.mousepressed(button, istouch)
+   menu.mousepressed(button, istouch)
+   tools.mousepressed(button, istouch)
 end
 
 function love.wheelmoved(wx, wy)
-  editor.wheelmoved(wx, wy)
-  menu.wheelmoved(wx, wy)
-  tools.wheelmoved(wx, wy)
+   editor.wheelmoved(wx, wy)
+   menu.wheelmoved(wx, wy)
+   tools.wheelmoved(wx, wy)
 end
