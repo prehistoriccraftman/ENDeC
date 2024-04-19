@@ -30,7 +30,7 @@ function menu.keypressed(key)
       saveFile(json.encode({undoIndex, getTasksList()}), "E:/GitHub/ENDeC/UserSaves/Save-Test.bak")
    elseif key == "f8" then --chargement
       dungeonMaps = json.decode(loadFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
-      local undoContent = json.decode(json.readFile("E:/GitHub/ENDeC/UserSaves/Save-Test.bak"))
+      local undoContent = json.decode(loadFile("E:/GitHub/ENDeC/UserSaves/Save-Test.bak"))
       undoIndex, tasksList = undoContent[1], undoContent[2]
       dungeon.load(dungeonMaps)
       thismaplv = 1

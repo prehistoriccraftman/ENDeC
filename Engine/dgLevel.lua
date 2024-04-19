@@ -8,13 +8,15 @@ dgLevel.infos = {
    {} --player position from next level
 }
 dgLevel.map = {}
+dgLevel.content = {}
 
 function dgLevel.load(lv)
    dgLevel.infos = dungeon.levels[lv][1]
    dgLevel.map = dungeon.levels[lv][2]
+   dgLevel.content = dungeon.levels[lv][3]
 end
 
-function dgLevel.newLevel(name, style, intro, lv, dw, dh)
+function dgLevel.newLevel(name, style, intro, lv, dw, dh, content)
    -- if dw == nil or dh == nil then
    --     dw, dh = 35, 35
    -- end
@@ -36,7 +38,12 @@ function dgLevel.newLevel(name, style, intro, lv, dw, dh)
          nmap[l][c] = casetype
       end
    end
-   return {ninfos, nmap}
+   local ncontent = {}
+   table.insert(ncontent, 
+   {
+      "cette troisième table recensera les objets, les mécanismes et les créatures {id, x, y, dir, \"description générée ou manuelle\"}"
+   })
+   return {ninfos, nmap, ncontent}
 end
 
 return dgLevel

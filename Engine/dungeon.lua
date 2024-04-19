@@ -2,7 +2,11 @@ local dungeon = {}
 
 dungeon.dgLevel = require("Engine.dgLevel")
 
-dungeon.infos = {}
+dungeon.infos = {
+   "Quel nom pour ce donjon ?",
+   "Quelle est le but de la quête ?",
+   "Décrivez le donjon, ses dangers et ses secrets"
+}
 dungeon.levels = {}
 
 dungeon.dgWidth = 0
@@ -31,7 +35,10 @@ dungeon.levels[1] = {
       "default style",
       "blabla d'intro du niveau 1",
       {13, 24, 1}, --départ depuis étage sup.
-      {2, 20, 2} --départ depuis étage inf.
+      {2, 20, 2}, --départ depuis étage inf.
+      {1,3}, --fourchette de niveaux des créatures
+      {1,1}, --fourchette de niveaux des trésors
+      {0,2,10}, --pourcentage de chance qu'un objet "non tagué" trouvé soit légendaire, rare, recherché. Au delà c'est un objet commun
    },
    {
       {11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12},
@@ -60,20 +67,11 @@ dungeon.levels[1] = {
       {10, 11, 12, 10, 11, 12, 99, 11, 99, 10, 99, 12, 99, 10, 99, 10, 99, 12, 99, 11, 12, 10, 11, 12, 10, 11},
       {11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 70, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12},
       {12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10}
+   },
+   {
+      "cette troisième table recensera les objets, les mécanismes et les créatures {id, x, y, dir, \"description générée ou manuelle\"}"
    }
 }
--- dungeon.levels[2] = {
-
--- }
--- dungeon.levels[3] = {
-
--- }
--- dungeon.levels[4] = {
-
--- }
--- dungeon.levels[5] = {
-
--- }
 
 function dungeon.case(lv, ligne, colonne)
    return dungeon.levels[lv][ligne][colonne]
