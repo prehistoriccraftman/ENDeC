@@ -20,6 +20,7 @@ function tools.draw(dt)
 end
 
 function tools.keypressed(key)
+   local task = {}
    if thismaplv ~= 0 then
       if key == "left" then --on se positionne sur la carte précédente
          thismaplv = thismaplv - 1
@@ -40,20 +41,23 @@ function tools.keypressed(key)
    end
    if key == "kp+" then --on ajoute une nouvelle carte à la liste des levels
       thismaplv = #dungeon.levels + 1 --on positionne le curseur des niveaux sur le dernier index+1
-      addTask({"add", thismaplv}) --on ajoute l'action à la liste undo
+      task[undoIndex + 1] = {"add", thismaplv}
+      addTask(task) --on ajoute l'action à la liste undo
       editor.load() --on force le chargement du nouveau niveau, qui sera créé automatiquement, puisqu'il n'existe pas encore
    end
    if key == "insert" then --on insert une nouvelle carte après l'index courant
-      thismaplv = thismaplv+1 --on positionne le curseur sur le futur niveau
+      thismaplv = thismaplv + 1 --on positionne le curseur sur le futur niveau
       table.insert(dungeon.levels, thismaplv, dungeon.dgLevel.newLevel()) --on crée le nouveau niveau, en l'insérant à l'index indiqué
-      addTask({"add", thismaplv}) --on ajoute l'action à la liste undo
+      task[undoIndex + 1] = {"add", thismaplv}
+      addTask(task) --on ajoute l'action à la liste undo
       editor.load() --on force le chargement du nouveau niveau
    end
    if key == "kp-" then
       if #dungeon.levels > 0 then
-         trashcan[thismaplv] = dungeon.levels[thismaplv]  --on jette la carte à la poubelle
+         trashcan[thismaplv] = dungeon.levels[thismaplv] --on jette la carte à la poubelle
          table.remove(dungeon.levels, thismaplv) --et on l'enlève des levels
-         addTask({"rem", thismaplv}) --on ajoute l'action à la liste undo
+         task[undoIndex + 1] = {"rem", thismaplv}
+         addTask(task) --on ajoute l'action à la liste undo
          thismaplv = thismaplv - 1 --on se positionne sur le niveau précédent
          if thismaplv < 1 and #dungeon.levels > 0 then
             thismaplv = 1

@@ -84,6 +84,9 @@ function love.wheelmoved(wx, wy)
    tools.wheelmoved(wx, wy)
 end
 
+-----------------------------------
+------- Undo Functionnality -------
+
 undoIndex = 0
 tasksList = {}
 

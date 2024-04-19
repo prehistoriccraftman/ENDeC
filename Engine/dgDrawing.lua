@@ -19,7 +19,9 @@ dgDrawing.SUD = 3
 dgDrawing.OUEST = 4
 
 function dgDrawing.changeCase(ligne, colonne, type)
-   addTask({"edit", thismaplv, ligne, colonne, dgLevel.map[ligne][colonne]})
+   local task = {}
+   task[undoIndex + 1] = {"edit", thismaplv, ligne, colonne, dgLevel.map[ligne][colonne]}
+   addTask(task)
    dungeon.changeCase(thismaplv, ligne, colonne, type)
 end
 

@@ -55,17 +55,6 @@ function inbound()
    return false
 end
 
-function undo()
-   if undo[#undo][1] == "edit" then
-      dungeon.changeCase(undo[#undo][2], undo[#undo][3], type)
-   elseif undo[#undo][1] == "rem" then
-      table.insert(dungeon.levels, undo[#undo][2], trashcan[undo[#undo][3]])
-   elseif undo[#undo][1] == "add" then
-      table.remove(dungeonMaps[2], thismaplv)
-   end
-   undoIndex = undoIndex - 1
-end
-
 function saveFile(str, filename)
    local success
    local errormessage
