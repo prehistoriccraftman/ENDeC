@@ -5,22 +5,22 @@ local tasksList = {}
 
 function undo.addTask(task)
    if undo.currentIndex < #tasksList then
-      taskList = removeAfter(undo.currentIndex)
+      tasksList = removeAfter(undo.currentIndex)
    end
 
    table.insert(tasksList, #tasksList + 1, task)
-   while #taskList > 1000 do
-      table.remove(taskList, 1)
+   while #tasksList > 1000 do
+      table.remove(tasksList, 1)
    end
    undo.currentIndex = #tasksList
 end
 
-function undo.getTaskLists()
+function undo.getTasksLists()
    return tasksList
 end
 
 function undo.undo() --Ctrl + Z
-   if #taskList > 0 then
+   if #tasksList > 0 then
       if tasksList[undo.currentIndex][1] == "edit" then --on rétablit ce qui a été modifié
          dungeon.changeCase(tasksList[undo.currentIndex][2], tasksList[undo.currentIndex][3], type)
       elseif tasksList[undo.currentIndex][1] == "rem" then --on remet ce qui a été enlevé
@@ -38,10 +38,10 @@ function undo.undo() --Ctrl + Z
 end
 
 function undo.redo() --Ctrl + Y
-   if #taskList > 0 then
+   if #tasksList > 0 then
       undo.currentIndex = undo.currentIndex + 1 --on avance le curseur d'un pas
-      if undo.currentIndex > #taskList then
-         undo.currentIndex = #taskList
+      if undo.currentIndex > #tasksList then
+         undo.currentIndex = #tasksList
       end
       if tasksList[undo.currentIndex][1] == "edit" then --on remodifie ce qui avait été rétabli
          dungeon.changeCase(tasksList[undo.currentIndex][2], tasksList[undo.currentIndex][3], type)
@@ -52,6 +52,9 @@ function undo.redo() --Ctrl + Y
          table.insert(dungeon.levels, thismaplv, trashcan[tasksList[undo.currentIndex][3]])
       end
    end
+end
+
+function undo.load()
 end
 
 function removeAfter(ptable, pindex)

@@ -10,7 +10,8 @@ dgLevel.infos = {
 dgLevel.map = {}
 
 function dgLevel.load(lv)
-   dgLevel.map = dungeon.levels[lv]
+   dgLevel.infos = dungeon.levels[lv][1]
+   dgLevel.map = dungeon.levels[lv][2]
 end
 
 function dgLevel.newLevel(name, style, intro, lv, dw, dh)
@@ -25,17 +26,17 @@ function dgLevel.newLevel(name, style, intro, lv, dw, dh)
       {},
       {}
    }
-   local nmap = {}
-   local nlevel = {ninfos, nmap}
 
+   local nmap = {}
+   -- local nlevel = {ninfos, nmap}
    for l = 1, dh or 35 do
-      nlevel.map[l] = {}
+      nmap[l] = {}
       for c = 1, dw or 35 do
          local casetype = math.random(90, 93)
-         nlevel.map[l][c] = casetype
+         nmap[l][c] = casetype
       end
    end
-   return {nlevel.ninfos, nlevel.nmap}
+   return {ninfos, nmap}
 end
 
 return dgLevel

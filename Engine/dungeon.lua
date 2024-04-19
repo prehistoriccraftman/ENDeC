@@ -213,6 +213,7 @@ function dungeon.load(dungeonMaps)
       dungeon.infos = dungeonMaps[1]
       dungeon.levels = dungeonMaps[2]
    end
+   dungeon.dgLevel.load(1)
 end
 
 function dungeon.loadLevel(lv)
@@ -222,8 +223,8 @@ function dungeon.loadLevel(lv)
 
    dungeon.dgLevel.load(lv)
 
-   dungeon.dgWidth = #dungeon.dgLevel.map[2][1]
-   dungeon.dgHeight = #dungeon.dgLevel.map[2]
+   dungeon.dgWidth = #dungeon.dgLevel.map[1]
+   dungeon.dgHeight = #dungeon.dgLevel.map
    dungeon.w = dungeon.dgWidth * dungeon.tailleCase
    dungeon.h = dungeon.dgHeight * dungeon.tailleCase
 end
