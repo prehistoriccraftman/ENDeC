@@ -43,8 +43,8 @@ function editor.mousepressed(button, istouch)
 
    if button == 1 then
       if
-         ex >= translate and ex <= (translate + dungeon.lvWidth * dungeon.tailleCase) and ey >= translate and
-            ey <= (translate + dungeon.lvHeight * dungeon.tailleCase)
+         ex > 0 and ex <= (dungeon.lvWidth * dungeon.tailleCase) and ey > 0 and
+            ey <= (dungeon.lvHeight * dungeon.tailleCase)
        then
          editType = math.random(10, 12)
          local ligne = math.floor(ey / dungeon.tailleCase) + 1
@@ -52,10 +52,8 @@ function editor.mousepressed(button, istouch)
          dgDrawing.changeCase(ligne, colonne, editType)
       end
    elseif button == 2 then
-      if
-         ex >= translate and ex <= (translate + dungeon.lvWidth * dungeon.tailleCase) and ey >= translate and
-            ey <= (translate + dungeon.lvHeight * dungeon.tailleCase)
-       then
+      if ex > 0 and ex <= (dungeon.lvWidth * dungeon.tailleCase) and ey > 0 and
+            ey <= (dungeon.lvHeight * dungeon.tailleCase) then
          editType = math.random(90, 92)
          local ligne = math.floor(ey / dungeon.tailleCase) + 1
          local colonne = math.floor(ex / dungeon.tailleCase) + 1
