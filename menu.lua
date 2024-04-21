@@ -26,26 +26,26 @@ end
 function menu.keypressed(key)
    if key == "f5" then --sauvegarde
       dungeonMaps = {dungeon.infos, dungeon.levels}
-      saveFile(json.encode(dungeonMaps), "E:/GitHub/ENDeC/UserSaves/Save-Test.dmf")
-      saveFile(json.encode({undoIndex, getTasksList()}), "E:/GitHub/ENDeC/UserSaves/Save-Test.bak")
+      saveFile(json.encode(dungeonMaps), "UserSaves/Save-Test.dmf")
+      saveFile(json.encode({undoIndex, getTasksList()}), "UserSaves/Save-Test.bak")
    elseif key == "f8" then --chargement
-      dungeonMaps = json.decode(loadFile("E:/GitHub/ENDeC/UserSaves/Save-Test.dmf"))
-      local undoContent = json.decode(loadFile("E:/GitHub/ENDeC/UserSaves/Save-Test.bak"))
+      dungeonMaps = json.decode(loadFile("UserSaves/Save-Test.dmf"))
+      local undoContent = json.decode(loadFile("UserSaves/Save-Test.bak"))
       undoIndex, tasksList = undoContent[1], undoContent[2]
-      dungeon.load(dungeonMaps)
+      dungeon.load()
       thismaplv = 1
       editor.load()
    end
 end
 
 function menu.mousepressed(button, istouch)
-   if focus() == "menu" then
+   if focus(menu.canvas) == "menu" then
       print(focusOn)
    end
 end
 
 function menu.wheelmoved(wx, wy)
-   if focus() == "menu" then
+   if focus(menu.canvas) == "menu" then
       print(focusOn)
    end
 end

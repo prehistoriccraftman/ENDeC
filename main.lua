@@ -37,10 +37,10 @@ love.filesystem.setIdentity(love.filesystem.getIdentity(), true)
 function love.load()
    trashcanIndex = 0
    thismaplv = 1
-   menu.load()
+   dungeon.load()
    tools.load()
+   menu.load()
    editor.load()
-   load()
 end
 
 function love.update(dt)
@@ -48,8 +48,8 @@ function love.update(dt)
    mx = love.mouse.getX()
    my = love.mouse.getY()
 
-   menu.update(dt)
    tools.update(dt)
+   menu.update(dt)
    editor.update(dt)
 end
 
@@ -61,15 +61,15 @@ function love.draw()
    love.graphics.rectangle("line", 2, 52, (wWidth / 2) - 5, wHeight - 55)
    love.graphics.setColor(1, 1, 1, 1)
 
-   menu.draw()
    tools.draw()
+   menu.draw()
    editor.draw()
 end
 
 function love.keypressed(key)
-   editor.keypressed(key)
-   menu.keypressed(key)
    tools.keypressed(key)
+   menu.keypressed(key)
+   editor.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
@@ -149,9 +149,6 @@ function redo() --Ctrl + Y
    end
 end
 
-function load()
-end
-
 function removeAfter(ptable, pindex)
    local tab = {}
    for i = 1, pindex do
@@ -163,13 +160,12 @@ end
 -----------------------------------
 ------- Misc Functionnalities -------
 
-function focus()
-   if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
-      focusOn = "menu"
-   elseif mx > tools.canvas.x and my > tools.canvas.y and mx < tools.canvas.w and my < tools.canvas.h then
-      focusOn = "tools"
-   elseif mx > editor.canvas.x and my > editor.canvas.y and mx < editor.canvas.w and my < editor.canvas.h then
-      focusOn = "editor"
+function focus(thisCanvas)
+   if
+      mx > thisCanvas.x and my > thisCanvas.y and mx < thisCanvas.w + thisCanvas.x and
+         my < thisCanvas.h + thisCanvas.y
+    then
+      focusOn = thisCanvas.name
    end
    return focusOn
 end
@@ -182,15 +178,17 @@ function saveFile(str, filename)
    success, errormessage = thisfile:write(str)
    thisfile:close()
 
-   print(succes, errormessage)
+   print(success or "file dont exist or errors...", errormessage or "write save file (" .. filename .. ") succes")
 end
 
 function loadFile(filename)
-   local content
+   local content, errormessage
 
    thisfile = io.open(filename, "r")
-   content = thisfile:read("*all")
+   content, errormessage = thisfile:read("*all")
    thisfile:close()
+
+   print(errormessage or "load file (" .. filename .. ") succes")
 
    return content
 end

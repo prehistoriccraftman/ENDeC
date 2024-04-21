@@ -9,21 +9,17 @@ dgDrawing.viewY = 0
 dgDrawing.viewWidth = 200
 dgDrawing.viewHeight = 200
 
-dgDrawing.dgWidth = 0
-dgDrawing.dgHeight = 0
-dgDrawing.tailleCase = 10
-
 dgDrawing.NORD = 1
 dgDrawing.EST = 2
 dgDrawing.SUD = 3
 dgDrawing.OUEST = 4
 
 function dgDrawing.changeCase(ligne, colonne, type)
-   addTask({undoIndex + 1, "edit", thismaplv, ligne, colonne, dgLevel.map[ligne][colonne]})
+   addTask({undoIndex + 1, "edit", thismaplv, ligne, colonne, type})
    dungeon.changeCase(thismaplv, ligne, colonne, type)
 end
 
-function dgDrawing.load(lv)
+function dgDrawing.load()
 end
 
 function dgDrawing.draw2D(px, py)
@@ -34,8 +30,8 @@ function dgDrawing.draw2D(px, py)
       py = 0
    end
    --
-   for ligne = 1, dungeon.dgHeight do
-      for colonne = 1, dungeon.dgWidth do
+   for ligne = 1, dungeon.lvHeight do
+      for colonne = 1, dungeon.lvWidth do
          local case = dungeon.dgLevel.map[ligne][colonne]
          local x = (colonne - 1) * dungeon.tailleCase
          local y = (ligne - 1) * dungeon.tailleCase
