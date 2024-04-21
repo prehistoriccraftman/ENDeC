@@ -48,32 +48,4 @@ end
 function menu.wheelmoved(wx, wy)
 end
 
-function inbound()
-   if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
-      return true
-   end
-   return false
-end
-
-function saveFile(str, filename)
-   local success
-   local errormessage
-
-   thisfile = io.open(filename, "w")
-   success, errormessage = thisfile:write(str)
-   thisfile:close()
-
-   print(succes, errormessage)
-end
-
-function loadFile(filename)
-   local content
-
-   thisfile = io.open(filename, "r")
-   content = thisfile:read("*all")
-   thisfile:close()
-
-   return content
-end
-
 return menu

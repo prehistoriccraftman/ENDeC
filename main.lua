@@ -108,14 +108,14 @@ end
 
 function undo() --Ctrl + Z
    if #tasksList > 0 then
-      if tasksList[undoIndex][1] == "edit" then --on rétablit ce qui a été modifié
-         dungeon.changeCase(tasksList[undoIndex][2], tasksList[undoIndex][3], type)
-      elseif tasksList[undoIndex][1] == "rem" then --on remet ce qui a été enlevé
-         table.insert(dungeon.levels, tasksList[undoIndex][2], trashcan[tasksList[undoIndex][2]])
+      if tasksList[undoIndex][2] == "edit" then --on rétablit ce qui a été modifié
+         dgDrawing.changeCase(tasksList[undoIndex][3], tasksList[undoIndex][4], tasksList[undoIndex][5])
+      elseif tasksList[undoIndex][2] == "rem" then --on remet ce qui a été enlevé
+         table.insert(dungeon.levels, tasksList[undoIndex][3], trashcan[tasksList[undoIndex][3]])
          trashcan[tasksList[undoIndex][2]] = nil --on retire la carte restaurée de la poubelle
-      elseif tasksList[undoIndex][1] == "add" then --on enlève ce qui a été ajouté         
+      elseif tasksList[undoIndex][2] == "add" then --on enlève ce qui a été ajouté         
          trashcan[tasksList[undoIndex][2]] = dungeon.levels[tasksList[undoIndex][2]] --on jette la carte à la poubelle
-         table.remove(dungeon.levels, tasksList[undoIndex][2]) --et on l'enlève des levels
+         table.remove(dungeon.levels, tasksList[undoIndex][3]) --et on l'enlève des levels
       end
       undoIndex = undoIndex - 1 --on recule le curseur d'un pas
       if undoIndex < 0 then
@@ -130,12 +130,12 @@ function redo() --Ctrl + Y
       if undoIndex > #tasksList then
          undoIndex = #tasksList
       end
-      if tasksList[undoIndex][1] == "edit" then --on remodifie ce qui avait été rétabli
-         dungeon.changeCase(tasksList[undoIndex][2], tasksList[undoIndex][3], type)
-      elseif tasksList[undoIndex] == "rem" then --on on retire ce qui avait été restauré
+      if tasksList[undoIndex][2] == "edit" then --on remodifie ce qui avait été rétabli
+         dgDrawing.changeCase(tasksList[undoIndex][3], tasksList[undoIndex][4], tasksList[undoIndex][5])
+      elseif tasksList[undoIndex][2] == "rem" then --on on retire ce qui avait été restauré
          trashcan[thismaplv] = dungeon.levels[thismaplv] --on rejette la carte à la poubelle
-         table.remove(dungeon.levels, tasksList[undoIndex][2], trashcan[tasksList[undoIndex][3]]) --et on l'enlève des levels
-      elseif tasksList[undoIndex] == "add" then --on remet ce qui avait été enlevé
+         table.remove(dungeon.levels, tasksList[undoIndex][3], trashcan[tasksList[undoIndex][3]]) --et on l'enlève des levels
+      elseif tasksList[undoIndex][2] == "add" then --on remet ce qui avait été enlevé
          table.insert(dungeon.levels, thismaplv, trashcan[tasksList[undoIndex][3]])
       end
    end
@@ -150,4 +150,35 @@ function removeAfter(ptable, pindex)
       table.insert(tab, pTable[i])
    end
    ptable = tab
+end
+
+-----------------------------------
+------- Misc Functionnalities -------
+
+function inbound()
+   if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
+      return true
+   end
+   return false
+end
+
+function saveFile(str, filename)
+   local success
+   local errormessage
+
+   thisfile = io.open(filename, "w")
+   success, errormessage = thisfile:write(str)
+   thisfile:close()
+
+   print(succes, errormessage)
+end
+
+function loadFile(filename)
+   local content
+
+   thisfile = io.open(filename, "r")
+   content = thisfile:read("*all")
+   thisfile:close()
+
+   return content
 end
