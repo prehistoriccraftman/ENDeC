@@ -73,15 +73,23 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
-   editor.mousepressed(button, istouch)
-   menu.mousepressed(button, istouch)
-   tools.mousepressed(button, istouch)
+   if focus() == "editor" then
+      editor.mousepressed(button, istouch)
+   elseif focus() == "menu" then
+      menu.mousepressed(button, istouch)
+   elseif focus() == "tools" then
+      tools.mousepressed(button, istouch)
+   end
 end
 
 function love.wheelmoved(wx, wy)
-   editor.wheelmoved(wx, wy)
-   menu.wheelmoved(wx, wy)
-   tools.wheelmoved(wx, wy)
+   if focus() == "editor" then
+      editor.wheelmoved(wx, wy)
+   elseif focus() == "menu" then
+      menu.wheelmoved(wx, wy)
+   elseif focus() == "tools" then
+      tools.wheelmoved(wx, wy)
+   end
 end
 
 -----------------------------------
@@ -113,7 +121,7 @@ function undo() --Ctrl + Z
       elseif tasksList[undoIndex][2] == "rem" then --on remet ce qui a été enlevé
          table.insert(dungeon.levels, tasksList[undoIndex][3], trashcan[tasksList[undoIndex][3]])
          trashcan[tasksList[undoIndex][2]] = nil --on retire la carte restaurée de la poubelle
-      elseif tasksList[undoIndex][2] == "add" then --on enlève ce qui a été ajouté         
+      elseif tasksList[undoIndex][2] == "add" then --on enlève ce qui a été ajouté
          trashcan[tasksList[undoIndex][2]] = dungeon.levels[tasksList[undoIndex][2]] --on jette la carte à la poubelle
          table.remove(dungeon.levels, tasksList[undoIndex][3]) --et on l'enlève des levels
       end
@@ -155,11 +163,15 @@ end
 -----------------------------------
 ------- Misc Functionnalities -------
 
-function inbound()
+function focus()
    if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
-      return true
+      focusOn = "menu"
+   elseif mx > tools.canvas.x and my > tools.canvas.y and mx < tools.canvas.w and my < tools.canvas.h then
+      focusOn = "tools"
+   elseif mx > editor.canvas.x and my > editor.canvas.y and mx < editor.canvas.w and my < editor.canvas.h then
+      focusOn = "editor"
    end
-   return false
+   return focusOn
 end
 
 function saveFile(str, filename)

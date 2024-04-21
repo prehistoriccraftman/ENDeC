@@ -11,7 +11,7 @@ function editor.canvas.update(self, dt)
 
    --Draw inside
    love.graphics.scale(editScale, editScale)
-   dgDrawing.draw(dt, "2D", translate, translate)
+   dgDrawing.draw(dt, "2D", 5, 5)
    love.graphics.scale(1, 1)
 end
 
@@ -34,9 +34,8 @@ function editor.keypressed(key)
 end
 
 function editor.mousepressed(button, istouch)
-   if inbound() then
-      focus = "editor"
-      print(focus)
+   if focus() == "editor" then
+      print(focusOn)
       if button == 3 then
          editScale = 1
       end
@@ -50,9 +49,8 @@ function editor.mousepressed(button, istouch)
          then
             local ligne = math.floor(my / dgDrawing.tailleCase) + 1
             local colonne = math.floor(mx / dgDrawing.tailleCase) + 1
-            --
             dgDrawing.changeCase(ligne, colonne, editType)
-            addTask({undoIndex + 1, "add", ligne, colonne, type)
+            addTask({undoIndex + 1, "add", ligne, colonne, editType})
         end
     elseif mbutton == 2 then
         if
@@ -61,14 +59,16 @@ function editor.mousepressed(button, istouch)
          then
             local ligne = math.floor(my / dgDrawing.tailleCase) + 1
             local colonne = math.floor(mx / dgDrawing.tailleCase) + 1
-            --
-            dgDrawing.changeCase(ligne, colonne, math.random(90, 93))
+            local casetype = math.random(90, 93)
+            dgDrawing.changeCase(ligne, colonne, casetype)
+            addTask({undoIndex + 1, "add", ligne, colonne, type})
         end
     end
 end
 
 function editor.wheelmoved(wx, wy)
-   if inbound() then
+   if focus() == "editor" then
+      print(focusOn)
       -- love.graphics.translate(-mx,-my)
       if wy > 0 then
          editScale = editScale * 1.1
@@ -82,13 +82,6 @@ function editor.wheelmoved(wx, wy)
          end
       end
    end
-end
-
-function inbound()
-   if mx > editor.canvas.x and my > editor.canvas.y and mx < editor.canvas.w and my < editor.canvas.h then
-      return true
-   end
-   return false
 end
 
 return editor

@@ -39,13 +39,15 @@ function menu.keypressed(key)
 end
 
 function menu.mousepressed(button, istouch)
-   if inbound() then
-      focus = "menu"
-      print(focus)
+   if focus() == "menu" then
+      print(focusOn)
    end
 end
 
 function menu.wheelmoved(wx, wy)
+   if focus() == "menu" then
+      print(focusOn)
+   end
 end
 
 return menu
