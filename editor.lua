@@ -31,7 +31,7 @@ function editor.keypressed(key)
 end
 
 function editor.mousepressed(button, istouch)
-   if focus(editor.canvas) == "editor" then
+   if focus() == "editor" then
       print(focusOn)
       if button == 3 then
          editScale = 1
@@ -65,7 +65,7 @@ function editor.mousepressed(button, istouch)
 end
 
 function editor.wheelmoved(wx, wy)
-   if focus(editor.canvas) == "editor" then
+   if focus() == "editor" then
       print(focusOn)
       -- love.graphics.translate(-mx,-my)
       if wy > 0 then

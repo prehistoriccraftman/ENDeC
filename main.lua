@@ -160,12 +160,13 @@ end
 -----------------------------------
 ------- Misc Functionnalities -------
 
-function focus(thisCanvas)
-   if
-      mx > thisCanvas.x and my > thisCanvas.y and mx < thisCanvas.w + thisCanvas.x and
-         my < thisCanvas.h + thisCanvas.y
-    then
-      focusOn = thisCanvas.name
+function focus()
+   if mx > menu.canvas.x and my > menu.canvas.y and mx < menu.canvas.w and my < menu.canvas.h then
+      focusOn = "menu"
+   elseif mx > tools.canvas.x and my > tools.canvas.y and mx < tools.canvas.w+tools.canvas.x and my < tools.canvas.h+tools.canvas.y then
+      focusOn = "tools"
+   elseif mx > editor.canvas.x and my > editor.canvas.y and mx < editor.canvas.w+editor.canvas.x and my < editor.canvas.h+editor.canvas.y then
+      focusOn = "editor"
    end
    return focusOn
 end
