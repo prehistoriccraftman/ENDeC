@@ -34,7 +34,7 @@ function dgLevel.newLevel(name, style, intro, lv, dw, dh, content)
    for l = 1, dh or 35 do
       nmap[l] = {}
       for c = 1, dw or 35 do
-         local casetype = math.random(90, 93)
+         local casetype = math.random(10, 12)
          nmap[l][c] = casetype
       end
    end

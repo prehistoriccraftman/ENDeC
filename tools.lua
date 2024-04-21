@@ -67,15 +67,9 @@ function tools.keypressed(key)
 end
 
 function tools.mousepressed(button, istouch)
-   if focus() == "tools" then
-      print(focusOn)
-   end
 end
 
 function tools.wheelmoved(wx, wy)
-   if focus() == "tools" then
-      print(focusOn)
-   end
 end
 
 return tools

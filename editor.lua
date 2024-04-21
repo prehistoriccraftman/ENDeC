@@ -31,11 +31,8 @@ function editor.keypressed(key)
 end
 
 function editor.mousepressed(button, istouch)
-   if focus() == "editor" then
-      print(focusOn)
-      if button == 3 then
-         editScale = 1
-      end
+   if button == 3 then
+      editScale = 1
    end
 
    local ex = ((mx - editor.canvas.x) / editScale) - translate
@@ -52,8 +49,10 @@ function editor.mousepressed(button, istouch)
          dgDrawing.changeCase(ligne, colonne, editType)
       end
    elseif button == 2 then
-      if ex > 0 and ex <= (dungeon.lvWidth * dungeon.tailleCase) and ey > 0 and
-            ey <= (dungeon.lvHeight * dungeon.tailleCase) then
+      if
+         ex > 0 and ex <= (dungeon.lvWidth * dungeon.tailleCase) and ey > 0 and
+            ey <= (dungeon.lvHeight * dungeon.tailleCase)
+       then
          editType = math.random(90, 92)
          local ligne = math.floor(ey / dungeon.tailleCase) + 1
          local colonne = math.floor(ex / dungeon.tailleCase) + 1
@@ -63,19 +62,16 @@ function editor.mousepressed(button, istouch)
 end
 
 function editor.wheelmoved(wx, wy)
-   if focus() == "editor" then
-      print(focusOn)
-      -- love.graphics.translate(-mx,-my)
-      if wy > 0 then
-         editScale = editScale * 1.1
-         if editScale > 5 then
-            editScale = 5
-         end
-      elseif wy < 0 then
-         editScale = editScale * 0.9
-         if editScale < 0.5 then
-            editScale = 0.5
-         end
+   -- love.graphics.translate(-mx,-my)
+   if wy > 0 then
+      editScale = editScale * 1.1
+      if editScale > 5 then
+         editScale = 5
+      end
+   elseif wy < 0 then
+      editScale = editScale * 0.9
+      if editScale < 0.5 then
+         editScale = 0.5
       end
    end
 end
