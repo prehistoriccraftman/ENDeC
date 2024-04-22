@@ -22,6 +22,9 @@ thismaplv = 1
 trashcan = {}
 trashcanIndex = 0
 
+undoIndex = 0
+tasksList = {}
+
 canvas = require("Engine.canvas")
 json = require("Engine.json")
 dgDrawing = require("Engine.dgDrawing")
@@ -97,12 +100,11 @@ end
 -----------------------------------
 ------- Undo Functionnality -------
 
-undoIndex = 0
-tasksList = {}
-
 function addTask(task)
-   if undoIndex < #tasksList then
-      tasksList = removeAfter(undoIndex)
+   if #tasksList ~= 0 then
+      if undoIndex < #tasksList then
+         tasksList = removeAfter(tasksList, undoIndex)
+      end
    end
 
    table.insert(tasksList, #tasksList + 1, task)
@@ -117,9 +119,9 @@ function getTasksList()
 end
 
 function undo() --Ctrl + Z
-   if #tasksList > 0 then
+   if #tasksList > 0 and undoIndex > 0 then
       if tasksList[undoIndex][2] == "edit" then --on rétablit ce qui a été modifié
-         dgDrawing.changeCase(tasksList[undoIndex][3], tasksList[undoIndex][4], tasksList[undoIndex][5])
+         dgDrawing.changeCase(tasksList[undoIndex][4], tasksList[undoIndex][5], tasksList[undoIndex][6])
       elseif tasksList[undoIndex][2] == "rem" then --on remet ce qui a été enlevé
          table.insert(dungeon.levels, tasksList[undoIndex][3], trashcan[tasksList[undoIndex][3]])
          trashcan[tasksList[undoIndex][2]] = nil --on retire la carte restaurée de la poubelle
@@ -141,7 +143,7 @@ function redo() --Ctrl + Y
          undoIndex = #tasksList
       end
       if tasksList[undoIndex][2] == "edit" then --on remodifie ce qui avait été rétabli
-         dgDrawing.changeCase(tasksList[undoIndex][3], tasksList[undoIndex][4], tasksList[undoIndex][5])
+         dgDrawing.changeCase(tasksList[undoIndex][4], tasksList[undoIndex][5], tasksList[undoIndex][6])
       elseif tasksList[undoIndex][2] == "rem" then --on on retire ce qui avait été restauré
          trashcan[thismaplv] = dungeon.levels[thismaplv] --on rejette la carte à la poubelle
          table.remove(dungeon.levels, tasksList[undoIndex][3], trashcan[tasksList[undoIndex][3]]) --et on l'enlève des levels
@@ -154,7 +156,7 @@ end
 function removeAfter(ptable, pindex)
    local tab = {}
    for i = 1, pindex do
-      table.insert(tab, pTable[i])
+      table.insert(tab, ptable[i])
    end
    ptable = tab
 end

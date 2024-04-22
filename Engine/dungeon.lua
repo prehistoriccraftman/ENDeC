@@ -36,9 +36,9 @@ dungeon.levels[1] = {
       "blabla d'intro du niveau 1",
       {13, 24, 1}, --départ depuis étage sup.
       {2, 20, 2}, --départ depuis étage inf.
-      {1,3}, --fourchette de niveaux des créatures
-      {1,1}, --fourchette de niveaux des trésors
-      {0,2,10}, --pourcentage de chance qu'un objet "non tagué" trouvé soit légendaire, rare, recherché. Au delà c'est un objet commun
+      {1, 3}, --fourchette de niveaux des créatures
+      {1, 1}, --fourchette de niveaux des trésors
+      {0, 2, 10} --pourcentage de chance qu'un objet "non tagué" trouvé soit légendaire, rare, recherché. Au delà c'est un objet commun
    },
    {
       {11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12},
@@ -69,18 +69,22 @@ dungeon.levels[1] = {
       {12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10, 11, 12, 10}
    },
    {
-      "cette troisième table recensera les objets, les mécanismes et les créatures {id, x, y, dir, \"description générée ou manuelle\"}"
+      'cette troisième table recensera les objets, les mécanismes et les créatures {id, x, y, dir, "description générée ou manuelle"}'
    }
 }
 
 dungeonMaps = {dungeon.infos, dungeon.levels}
 
 function dungeon.case(lv, ligne, colonne)
-   return dungeon.dgLevel.map[ligne][colonne]
+   local result = 0
+   if ligne <= #dungeon.dgLevel.map and ligne > 0 and colonne <= #dungeon.dgLevel.map[1] and colonne > 0 then
+      result = dungeon.dgLevel.map[ligne][colonne]
+   end
+   return result
 end
 
-function dungeon.changeCase(lv, ligne, colonne, type)
-   dungeon.dgLevel.map[ligne][colonne] = type
+function dungeon.changeCase(lv, ligne, colonne, ctype)
+   dungeon.dgLevel.map[ligne][colonne] = ctype
 end
 
 function dungeon.load()
@@ -104,9 +108,9 @@ function dungeon.loadLevel(lv)
    -- dungeon.h = dungeon.lvHeight * dungeon.tailleCase
 end
 
-function dungeon.blocked(case)
+function dungeon.blocked(pcase)
    for i = 1, #blockTable do
-      if blockTable[i] == case then
+      if blockTable[i] == pcase then
          return true
       end
    end
