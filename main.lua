@@ -29,6 +29,8 @@ canvas = require("Engine.canvas")
 json = require("Engine.json")
 dgDrawing = require("Engine.dgDrawing")
 dungeon = require("Engine.dungeon")
+spriteMgmt = require("Engine.spriteManagement")
+uiButton = require("Engine.UIButton")
 -- undo = require("Engine.undo")
 
 menu = require("menu") --barre de menu

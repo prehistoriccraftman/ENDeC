@@ -1,21 +1,22 @@
-local UIButton = {}
+local uiButton = {}
 
-function btnDraw()
+function uiButton.btnDraw()
 end
 
-function btnUpdate()
+function uiButton.btnUpdate()
 end
 
-function creaBtn(x, y, imgDefault, imgHover, text)
+function uiButton.creaBtn(x, y, imgDefault, imgClicked, imgError, imgOk, text)
    local tab = {}
    tab.x = x
    tab.y = y
    tab.imgDefault = imgDefault
-   tab.imgHover = imgHover
+   tab.imgClicked = imgHover
+   tab.imgError = imgError
+   tab.imgOk = imgOk
    tab.w = tab.imgDefault:getWidth()
    tab.h = tab.imgDefault:getHeight()
    tab.txt = text
-   tab.hover = false
    tab.pressed = false
 
    -- Fonctions d'affichage et de mise à jour
@@ -25,4 +26,4 @@ function creaBtn(x, y, imgDefault, imgHover, text)
    return tab
 end
 
-return UIButton
+return uiButton
