@@ -29,23 +29,23 @@ function menu.canvas.update(self, dt) -- override appelé dans --> updateDraw()
 end
 
 function menu.load()
-   loadSprite = spriteMgmt.getSprite("Images/BtnLoad.png", 20, 11)
-   saveSprite = spriteMgmt.getSprite("Images/BtnSave.png", 20, 11)
-   newDngSprite = spriteMgmt.getSprite("Images/BtnNewDng.png", 20, 15)
-   newMapSprite = spriteMgmt.getSprite("Images/BtnNewLv.png", 20, 15)
-   delMapSprite = spriteMgmt.getSprite("Images/BtnDelLv.png", 20, 15)
-   undoSprite = spriteMgmt.getSprite("Images/BtnUndo.png", 20, 11)
-   redoSprite = spriteMgmt.getSprite("Images/BtnRedo.png", 20, 11)
-   BtnLoad = uiButton.creaBtn(19, 5, loadSprite.quads[3], loadSprite.quads[4], loadSprite.quads[1], loadSprite.quads[2])
-   BtnSave =
-      uiButton.creaBtn(19, 30, saveSprite.quads[3], saveSprite.quads[4], saveSprite.quads[1], saveSprite.quads[2])
-   BtnNewDng = uiButton.creaBtn(17, 75, newDngSprite.quads[3], newDngSprite.quads[4])
-   BtnNewMap = uiButton.creaBtn(17, 100, newMapSprite.quads[3], newMapSprite.quads[4])
-   BtndelMap = uiButton.creaBtn(17, 125, delMapSprite.quads[3], delMapSprite.quads[4])
-   BtnUndo =
-      uiButton.creaBtn(19, 165, undoSprite.quads[3], undoSprite.quads[4], undoSprite.quads[1], undoSprite.quads[2])
-   BtnRedo =
-      uiButton.creaBtn(19, 90, redoSprite.quads[3], redoSprite.quads[4], redoSprite.quads[1], redoSprite.quads[2])
+   -- loadSprite = spriteMgmt.getSprite("Images/BtnLoad.png", 20, 11)
+   -- saveSprite = spriteMgmt.getSprite("Images/BtnSave.png", 20, 11)
+   -- newDngSprite = spriteMgmt.getSprite("Images/BtnNewDng.png", 20, 15)
+   -- newMapSprite = spriteMgmt.getSprite("Images/BtnNewLv.png", 20, 15)
+   -- delMapSprite = spriteMgmt.getSprite("Images/BtnDelLv.png", 20, 15)
+   -- undoSprite = spriteMgmt.getSprite("Images/BtnUndo.png", 20, 11)
+   -- redoSprite = spriteMgmt.getSprite("Images/BtnRedo.png", 20, 11)
+   -- BtnLoad = uiButton.creaBtn(19, 5, loadSprite.quads[3], loadSprite.quads[4], loadSprite.quads[1], loadSprite.quads[2])
+   -- BtnSave =
+   --    uiButton.creaBtn(19, 30, saveSprite.quads[3], saveSprite.quads[4], saveSprite.quads[1], saveSprite.quads[2])
+   -- BtnNewDng = uiButton.creaBtn(17, 75, newDngSprite.quads[3], newDngSprite.quads[4])
+   -- BtnNewMap = uiButton.creaBtn(17, 100, newMapSprite.quads[3], newMapSprite.quads[4])
+   -- BtndelMap = uiButton.creaBtn(17, 125, delMapSprite.quads[3], delMapSprite.quads[4])
+   -- BtnUndo =
+   --    uiButton.creaBtn(19, 165, undoSprite.quads[3], undoSprite.quads[4], undoSprite.quads[1], undoSprite.quads[2])
+   -- BtnRedo =
+   --    uiButton.creaBtn(19, 90, redoSprite.quads[3], redoSprite.quads[4], redoSprite.quads[1], redoSprite.quads[2])
 end
 
 function menu.update(dt)
@@ -59,24 +59,24 @@ function menu.update(dt)
       redopressed = true
    end
    
-   BtnLoad:update(dt)
-   BtnSave:update(dt)
-   BtnNewDng:update(dt)
-   BtnNewMap:update(dt)
-   BtndelMap:update(dt)
-   BtnUndo:update(dt)
-   BtnRedo:update(dt)
+   -- BtnLoad:update(dt)
+   -- BtnSave:update(dt)
+   -- BtnNewDng:update(dt)
+   -- BtnNewMap:update(dt)
+   -- BtndelMap:update(dt)
+   -- BtnUndo:update(dt)
+   -- BtnRedo:update(dt)
 end
 
 function menu.draw(dt)
    menu.canvas:draw()
-   BtnLoad:draw()
-   BtnSave:draw()
-   BtnNewDng:draw()
-   BtnNewMap:draw()
-   BtndelMap:draw()
-   BtnUndo:draw()
-   BtnRedo:draw()
+   -- BtnLoad:draw()
+   -- BtnSave:draw()
+   -- BtnNewDng:draw()
+   -- BtnNewMap:draw()
+   -- BtndelMap:draw()
+   -- BtnUndo:draw()
+   -- BtnRedo:draw()
 end
 
 function menu.keypressed(key)

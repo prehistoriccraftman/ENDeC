@@ -14,8 +14,8 @@ function uiButton.creaBtn(x, y, imgDefault, imgClicked, imgError, imgOk, text)
    tab.imgClicked = imgHover
    tab.imgError = imgError
    tab.imgOk = imgOk
-   tab.w = tab.imgDefault:getWidth()
-   tab.h = tab.imgDefault:getHeight()
+   -- tab.w = tab.imgDefault:getWidth()
+   -- tab.h = tab.imgDefault:getHeight()
    tab.txt = text
    tab.pressed = false
 
